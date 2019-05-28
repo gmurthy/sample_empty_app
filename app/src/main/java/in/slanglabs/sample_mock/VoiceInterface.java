@@ -20,8 +20,8 @@ import in.slanglabs.platform.action.SlangIntentAction;
  */
 
 public class VoiceInterface {
-    private static String app_id = "your_buddy_id";
-    private static String api_key = "your_buddy_key";
+    private static String app_id = "968fd6e6b1a347beb7b21b966f6b3c9d";
+    private static String api_key = "c80525dd5fa146d6a3a1aba91fc5d6b9";
     private static Context appContext;
 
     // To initialize Slang in your application, simply call VoiceInterface.init(context)
@@ -30,16 +30,17 @@ public class VoiceInterface {
 
         try {
             SlangBuddyOptions options = new SlangBuddyOptions.Builder()
-                .setContext(context)
-                .setBuddyId(app_id)
-                .setAPIKey(api_key)
-                .setListener(new BuddyListener(context))
-                .setIntentAction(new MyActionHandler())
-                .setRequestedLocales(SlangLocale.getSupportedLocales())
-                .setDefaultLocale(SlangLocale.LOCALE_ENGLISH_IN)
-                // change env to production when the buddy is published to production
-                .setEnvironment(SlangBuddy.Environment.STAGING)
-                .build();
+                    .setContext(context)
+                    .setBuddyId(app_id)
+                    .setAPIKey(api_key)
+                    .setListener(new BuddyListener(context))
+                    .setIntentAction(new MyActionHandler())
+                    .setRequestedLocales(SlangLocale.getSupportedLocales())
+                    .setDefaultLocale(SlangLocale.LOCALE_ENGLISH_IN)
+                    // change env to production when the buddy is published to production
+                    .setEnvironment(SlangBuddy.Environment.STAGING)
+                    .setUIProvider(CustomUIProvider.getInstance())
+                    .build();
             SlangBuddy.initialize(options);
         } catch (SlangBuddyOptions.InvalidOptionException e) {
             e.printStackTrace();
@@ -94,14 +95,14 @@ public class VoiceInterface {
         @Override
         public void onLocaleChangeFailed(final Locale newLocale, final SlangBuddy.LocaleChangeError e) {
             Log.d("BuddyListener",
-                "Locale(" + newLocale.getDisplayName() + ") Change Failed:" + e.getMessage());
+                    "Locale(" + newLocale.getDisplayName() + ") Change Failed:" + e.getMessage());
 
             new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     Toast.makeText(appContext,
-                        "Locale(" + newLocale.getDisplayName() + ") Change Failed:" + e.getMessage(),
-                        Toast.LENGTH_LONG).show();
+                            "Locale(" + newLocale.getDisplayName() + ") Change Failed:" + e.getMessage(),
+                            Toast.LENGTH_LONG).show();
                 }
             }, 10);
         }
